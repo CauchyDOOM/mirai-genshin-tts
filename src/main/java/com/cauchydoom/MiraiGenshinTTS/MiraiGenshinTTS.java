@@ -233,7 +233,7 @@ public class MiraiGenshinTTS extends JavaPlugin {
 			commands.put("#原神卡片", makeSearchesTemplate("Mirai"));
 			commands.put("#原神语音", makeSearchesTemplate("Silk"));
 			commands.put("#八重神子卡片", makeTemplate("八重神子", "Mirai"));// 标准样板
-			commands.put("#八重神子说", makeTemplate("网易", "Silk"));
+			commands.put("#八重神子说", makeTemplate("八重神子", "Silk"));
 		}
 		if (excs != null)
 			for (YamlElement cmd : excs.getKeys()) {
