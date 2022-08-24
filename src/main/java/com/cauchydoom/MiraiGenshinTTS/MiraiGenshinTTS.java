@@ -24,10 +24,8 @@
 package com.cauchydoom.MiraiGenshinTTS;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -43,7 +41,16 @@ import com.cauchydoom.MiraiGenshinTTS.cardprovider.AmrVoiceProvider;
 import com.cauchydoom.MiraiGenshinTTS.cardprovider.MiraiMusicCard;
 import com.cauchydoom.MiraiGenshinTTS.cardprovider.SilkVoiceProvider;
 import com.cauchydoom.MiraiGenshinTTS.cardprovider.XMLCardProvider;
+
 import com.cauchydoom.MiraiGenshinTTS.musicsource.YaeMikoSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.PaimonSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.SangonomiyaKokomiSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.AmberSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.KaeyaSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.LisaSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.JeanSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.XiangLingSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.KaedeharaKazuhaSource;
 
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
@@ -81,6 +88,14 @@ public class MiraiGenshinTTS extends JavaPlugin {
 	static {
 		// 注册TTS来源
 		sources.put("八重神子", new YaeMikoSource());
+		sources.put("凯亚", new KaeyaSource());
+		sources.put("派蒙", new PaimonSource());
+		sources.put("安柏", new AmberSource());
+		sources.put("琴", new JeanSource());
+		sources.put("香菱", new XiangLingSource());
+		sources.put("丽莎", new LisaSource());
+		sources.put("枫原万叶", new KaedeharaKazuhaSource());
+		sources.put("珊瑚宫心海", new SangonomiyaKokomiSource());
 		// 注册外观
 		cards.put("Silk", new SilkVoiceProvider());
 		cards.put("AMR", new AmrVoiceProvider());
@@ -109,8 +124,6 @@ public class MiraiGenshinTTS extends JavaPlugin {
 	 * @return return 返回一个指令执行器，可以注册到命令列表里面
 	 */
 	public BiConsumer<MessageEvent, String[]> makeTemplate(String source, String card) {
-		if (source.equals("all"))
-			return makeSearchesTemplate(card);
 		MusicCardProvider cb = cards.get(card);
 		if (cb == null)
 			throw new IllegalArgumentException("card template not exists");
@@ -140,44 +153,6 @@ public class MiraiGenshinTTS extends JavaPlugin {
 		};
 	}
 
-	/**
-	 * 自动搜索所有源并且以指定外观返回
-	 * 
-	 * @param card 音乐外观名称
-	 * @return return 返回一个指令执行器，可以注册到命令列表里面
-	 */
-	public BiConsumer<MessageEvent, String[]> makeSearchesTemplate(String card) {
-		MusicCardProvider cb = cards.get(card);
-		if (cb == null)
-			throw new IllegalArgumentException("card template not exists");
-		return (event, args) -> {
-			String sn = String.join(spliter, Arrays.copyOfRange(args, 1, args.length));
-
-			exec.execute(() -> {
-				for (MusicSource mc : sources.values()) {
-					if (!mc.isVisible())
-						continue;
-					MusicInfo mi;
-					try {
-						mi = mc.get(sn);
-					} catch (Throwable t) {
-						this.getLogger().debug(t);
-						continue;
-					}
-					try {
-						Utils.getProperReceiver(event).sendMessage(cb.process(mi, Utils.getProperReceiver(event)));
-					} catch (Throwable t) {
-						this.getLogger().debug(t);
-						Utils.getProperReceiver(event).sendMessage(unavailableShare);
-					}
-					return;
-				}
-				Utils.getProperReceiver(event).sendMessage(unfoundSong);
-			});
-
-		};
-	}
-
 	@SuppressWarnings("resource")
 	@Override
 	public void onEnable() {
@@ -187,7 +162,6 @@ public class MiraiGenshinTTS extends JavaPlugin {
 				new FileOutputStream(new File(this.getDataFolder(), "config.yml"))
 						.write(Utils.readAll(this.getResourceAsStream("config.yml")));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -230,10 +204,24 @@ public class MiraiGenshinTTS extends JavaPlugin {
 		String addDefault = cfg.getStringOrNull("adddefault");
 		commands.clear();
 		if (addDefault == null || addDefault.equals("true")) {
-			commands.put("#原神卡片", makeSearchesTemplate("Mirai"));
-			commands.put("#原神语音", makeSearchesTemplate("Silk"));
-			commands.put("#八重神子卡片", makeTemplate("八重神子", "Mirai"));// 标准样板
+			commands.put("#原神卡片", makeTemplate("派蒙", "Mirai"));
+			commands.put("#原神语音", makeTemplate("派蒙", "Mirai"));
+			commands.put("#八重神子卡片", makeTemplate("八重神子", "Mirai"));
 			commands.put("#八重神子说", makeTemplate("八重神子", "Silk"));
+			commands.put("#凯亚说", makeTemplate("凯亚", "Silk"));
+			commands.put("#凯亚卡片", makeTemplate("凯亚", "Mirai"));
+			commands.put("#派蒙说", makeTemplate("派蒙", "Silk"));
+			commands.put("#派蒙卡片", makeTemplate("派蒙", "Mirai"));
+			commands.put("#安柏说", makeTemplate("安柏", "Silk"));
+			commands.put("#安柏卡片", makeTemplate("安柏", "Mirai"));
+			commands.put("#琴说", makeTemplate("琴", "Silk"));
+			commands.put("#琴卡片", makeTemplate("琴", "Mirai"));
+			commands.put("#香菱说", makeTemplate("香菱", "Silk"));
+			commands.put("#香菱卡片", makeTemplate("香菱", "Mirai"));
+			commands.put("#枫原万叶说", makeTemplate("枫原万叶", "Silk"));
+			commands.put("#枫原万叶卡片", makeTemplate("枫原万叶", "Mirai"));
+			commands.put("#珊瑚宫心海说", makeTemplate("珊瑚宫心海", "Silk"));
+			commands.put("#珊瑚宫心海卡片", makeTemplate("珊瑚宫心海", "Mirai"));
 		}
 		if (excs != null)
 			for (YamlElement cmd : excs.getKeys()) {
