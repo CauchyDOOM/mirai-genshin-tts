@@ -45,8 +45,15 @@ import com.cauchydoom.MiraiGenshinTTS.cardprovider.XMLCardProvider;
 import com.cauchydoom.MiraiGenshinTTS.musicsource.YaeMikoSource;
 import com.cauchydoom.MiraiGenshinTTS.musicsource.PaimonSource;
 import com.cauchydoom.MiraiGenshinTTS.musicsource.SangonomiyaKokomiSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.SayuSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.ThomaSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.VentiSource;
 import com.cauchydoom.MiraiGenshinTTS.musicsource.AmberSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.BarbaraSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.DilucSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.EulaSource;
 import com.cauchydoom.MiraiGenshinTTS.musicsource.KaeyaSource;
+import com.cauchydoom.MiraiGenshinTTS.musicsource.KleeSource;
 import com.cauchydoom.MiraiGenshinTTS.musicsource.LisaSource;
 import com.cauchydoom.MiraiGenshinTTS.musicsource.JeanSource;
 import com.cauchydoom.MiraiGenshinTTS.musicsource.XiangLingSource;
@@ -96,6 +103,13 @@ public class MiraiGenshinTTS extends JavaPlugin {
 		sources.put("丽莎", new LisaSource());
 		sources.put("枫原万叶", new KaedeharaKazuhaSource());
 		sources.put("珊瑚宫心海", new SangonomiyaKokomiSource());
+		sources.put("迪卢克", new DilucSource());
+		sources.put("温迪", new VentiSource());
+		sources.put("可莉", new KleeSource());
+		sources.put("早柚", new SayuSource());
+		sources.put("芭芭拉", new BarbaraSource());
+		sources.put("托马", new ThomaSource());
+		sources.put("优菈", new EulaSource());
 		// 注册外观
 		cards.put("Silk", new SilkVoiceProvider());
 		cards.put("AMR", new AmrVoiceProvider());
@@ -222,6 +236,20 @@ public class MiraiGenshinTTS extends JavaPlugin {
 			commands.put("#枫原万叶卡片", makeTemplate("枫原万叶", "Mirai"));
 			commands.put("#珊瑚宫心海说", makeTemplate("珊瑚宫心海", "Silk"));
 			commands.put("#珊瑚宫心海卡片", makeTemplate("珊瑚宫心海", "Mirai"));
+			commands.put("#迪卢克说", makeTemplate("迪卢克", "Silk"));
+			commands.put("#迪卢克卡片", makeTemplate("迪卢克", "Mirai"));
+			commands.put("#温迪说", makeTemplate("温迪", "Silk"));
+			commands.put("#温迪卡片", makeTemplate("温迪", "Mirai"));
+			commands.put("#可莉说", makeTemplate("可莉", "Silk"));
+			commands.put("#可莉卡片", makeTemplate("可莉", "Mirai"));
+			commands.put("#早柚说", makeTemplate("早柚", "Silk"));
+			commands.put("#早柚卡片", makeTemplate("早柚", "Mirai"));
+			commands.put("#芭芭说", makeTemplate("芭芭", "Silk"));
+			commands.put("#芭芭卡片", makeTemplate("芭芭", "Mirai"));
+			commands.put("#托马说", makeTemplate("托马", "Silk"));
+			commands.put("#托马卡片", makeTemplate("托马", "Mirai"));
+			commands.put("#优菈说", makeTemplate("优菈", "Silk"));
+			commands.put("#优菈卡片", makeTemplate("优菈", "Mirai"));
 		}
 		if (excs != null)
 			for (YamlElement cmd : excs.getKeys()) {
