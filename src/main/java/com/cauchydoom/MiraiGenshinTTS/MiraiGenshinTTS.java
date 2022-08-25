@@ -244,8 +244,8 @@ public class MiraiGenshinTTS extends JavaPlugin {
 			commands.put("#可莉卡片", makeTemplate("可莉", "Mirai"));
 			commands.put("#早柚说", makeTemplate("早柚", "Silk"));
 			commands.put("#早柚卡片", makeTemplate("早柚", "Mirai"));
-			commands.put("#芭芭说", makeTemplate("芭芭", "Silk"));
-			commands.put("#芭芭卡片", makeTemplate("芭芭", "Mirai"));
+			commands.put("#芭芭拉说", makeTemplate("芭芭拉", "Silk"));
+			commands.put("#芭芭拉卡片", makeTemplate("芭芭拉", "Mirai"));
 			commands.put("#托马说", makeTemplate("托马", "Silk"));
 			commands.put("#托马卡片", makeTemplate("托马", "Mirai"));
 			commands.put("#优菈说", makeTemplate("优菈", "Silk"));
